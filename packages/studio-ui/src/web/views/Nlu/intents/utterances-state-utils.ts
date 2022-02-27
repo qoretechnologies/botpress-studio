@@ -59,7 +59,8 @@ export const textNodesFromUtterance = (
        * - modify E_000 linter in nlu server so it works without cleaning the utterance
        */
       const issue: DatasetIssue<'E_000'> | undefined = issues.find(
-        (issue) => issue.data.charStart === pslot.cleanPosition.start && issue.data.charEnd === pslot.cleanPosition.end
+        (issue) =>
+          issue.data.cleanCharStart === pslot.cleanPosition.start && issue.data.cleanCharEnd === pslot.cleanPosition.end
       )
 
       const slotExists = allSlots.some((s) => s.name === pslot.name)
