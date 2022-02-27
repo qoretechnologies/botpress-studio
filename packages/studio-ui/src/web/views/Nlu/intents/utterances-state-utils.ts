@@ -52,6 +52,12 @@ export const textNodesFromUtterance = (
       const from = previousSlot?.cleanPosition.end ?? 0
       const to = pslot.cleanPosition.start
 
+      /**
+       * This condition won't work if the utterance contains consecutive or leading spaces, but the issue E_004 can help flag those.
+       * TODO:
+       * - either report issue E_004 (so when its fixed by the user we can display E_000)
+       * - modify E_000 linter in nlu server so it works without cleaning the utterance
+       */
       const issue: DatasetIssue<'E_000'> | undefined = issues.find(
         (issue) => issue.data.charStart === pslot.cleanPosition.start && issue.data.charEnd === pslot.cleanPosition.end
       )
