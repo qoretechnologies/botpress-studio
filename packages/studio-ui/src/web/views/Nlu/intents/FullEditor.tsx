@@ -1,11 +1,11 @@
-import { DatasetIssue, LintingState } from '@botpress/nlu-client'
+import { DatasetIssue } from '@botpress/nlu-client'
 import { NLU } from 'botpress/sdk'
 import { utils } from 'botpress/shared'
 import _ from 'lodash'
 import React, { FC, useEffect, useRef, useState } from 'react'
 
 import { NluClient } from '../client'
-import { issueGuard } from '../issues/guard'
+import { fetchIssues } from './fetch-issues'
 
 import IntentHint from './IntentHint'
 import Slots from './slots/Slots'
@@ -24,8 +24,12 @@ export const IntentEditor: FC<Props> = (props) => {
   const [intent, setIntent] = useState<NLU.IntentDefinition>()
   const [issues, setIssues] = useState<DatasetIssue<'E_000'>[]>([])
 
-  const debouncedApiSaveIntent = useRef(
-    _.debounce((newIntent: NLU.IntentDefinition) => props.api.createIntent(newIntent), 2500)
+  const debouncedAPISaveIntentAndReloadIssues = useRef(
+    _.debounce(async (newIntent: NLU.IntentDefinition) => {
+      await props.api.createIntent(newIntent)
+      const issues = await fetchIssues(props)
+      setIssues(issues)
+    }, 2500)
   )
 
   useEffect(() => {
@@ -33,42 +37,27 @@ export const IntentEditor: FC<Props> = (props) => {
       setIntent(intent)
       utils.inspect(intent)
     })
+    void fetchIssues(props).then(setIssues)
 
-    void props.api.startLinting(props.contentLang).then(async (modelId) => {
-      const interval = setInterval(async () => {
-        const linting: LintingState = await props.api.getLinting(modelId)
-        if (linting.status !== 'linting') {
-          const relevantIssues = linting.issues
-            .filter(issueGuard('E_000'))
-            .filter((i) => i.data.intent === props.intent)
-          setIssues(relevantIssues)
-          clearInterval(interval)
-        }
-      }, 100)
-    })
-
-    return () => void debouncedApiSaveIntent.current.flush()
+    return () => void debouncedAPISaveIntentAndReloadIssues.current.flush()
   }, [props.intent])
 
-  if (!intent) {
-    // TODO display a fetching state instead
-    return null
-  }
-
-  const saveIntent = (newIntent: NLU.IntentDefinition) => {
+  const saveIntentAndReloadIssues = async (newIntent: NLU.IntentDefinition, opt: { debounce: boolean }) => {
     setIntent(newIntent)
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    props.api.createIntent(newIntent)
+    if (opt.debounce) {
+      await debouncedAPISaveIntentAndReloadIssues.current(newIntent)
+      return
+    }
+    await props.api.createIntent(newIntent)
+    await fetchIssues(props).then(setIssues)
   }
 
   const handleUtterancesChange = async (newUtterances: string[]) => {
-    setIssues([])
     const newIntent = { ...intent, utterances: { ...intent.utterances, [props.contentLang]: newUtterances } }
-    setIntent(newIntent)
-    await debouncedApiSaveIntent.current(newIntent)
+    await saveIntentAndReloadIssues(newIntent, { debounce: true })
   }
 
-  const handleSlotsChange = (slots: NLU.SlotDefinition[], { operation, name, oldName }) => {
+  const handleSlotsChange = async (slots: NLU.SlotDefinition[], { operation, name, oldName }) => {
     let newUtterances = [...intent.utterances[props.contentLang]]
     if (operation === 'deleted') {
       newUtterances = removeSlotFromUtterances(newUtterances, name)
@@ -77,11 +66,15 @@ export const IntentEditor: FC<Props> = (props) => {
     }
 
     const newIntent = { ...intent, utterances: { ...intent.utterances, [props.contentLang]: newUtterances }, slots }
-    saveIntent(newIntent)
+    void saveIntentAndReloadIssues(newIntent, { debounce: false })
   }
 
   const utterances = (intent && intent.utterances[props.contentLang]) || []
 
+  if (!intent) {
+    // TODO display a fetching state instead
+    return null
+  }
   return (
     <div className={style.intentEditor}>
       <div>

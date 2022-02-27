@@ -96,6 +96,7 @@
     "yn": "^4.0.0"
   },
   "devDependencies": {
+    "@botpress/nlu-client": "1.0.2-rc.3",
     "@types/bluebird-global": "^3.5.13",
     "@types/classnames": "^2.3.1",
     "@types/lodash": "^4.14.178",

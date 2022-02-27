@@ -1371,14 +1371,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@botpress/nlu-client@npm:1.0.2-rc.1":
-  version: 1.0.2-rc.1
-  resolution: "@botpress/nlu-client@npm:1.0.2-rc.1"
+"@botpress/nlu-client@npm:1.0.2-rc.3":
+  version: 1.0.2-rc.3
+  resolution: "@botpress/nlu-client@npm:1.0.2-rc.3"
   dependencies:
     axios: ^0.21.1
     joi: ^17.2.2
     lodash: ^4.17.19
-  checksum: 2a585bfa929d06f59829d4d1ea2a0e6aeab06935822f8aba48cac330206ce255c59751c68f6754b2a7058f82270b193858cec9903f8a35ca3db4b12e83087d4d
+  checksum: 4b1f445abddd82f4a06f2d702f224f4289ce13b584606e5e45f39e22c670926b209a5c6cd7c13eb543af3c21773929435d815adbe3543231885f2805c38f3f5b
   languageName: node
   linkType: hard
 
@@ -1388,7 +1388,7 @@ __metadata:
   dependencies:
     "@apidevtools/json-schema-ref-parser": ^9.0.9
     "@botpress/native-extensions": "*"
-    "@botpress/nlu-client": 1.0.2-rc.1
+    "@botpress/nlu-client": 1.0.2-rc.3
     "@types/bluebird-global": ^3.5.13
     "@types/bluebird-retry": ^0.11.5
     "@types/express": ^4.17.13
@@ -1468,6 +1468,7 @@ __metadata:
     "@analytics/segment": ^1.1.3
     "@blueprintjs/core": ^3.23.1
     "@blueprintjs/select": ^3.12.0
+    "@botpress/nlu-client": 1.0.2-rc.3
     "@botpress/superinput": "workspace:^"
     "@botpress/ui-shared": "*"
     "@types/bluebird-global": ^3.5.13
