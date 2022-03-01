@@ -16,11 +16,11 @@ export const Linting: React.FC<Props> = (props: Props) => {
 
   const startLinting = async () => {
     setLinting(undefined)
-    const modelId = await props.api.startLinting(props.lang)
+    const modelId = await props.api.startLinting(props.lang, 'slowest')
     setModelId(modelId)
 
     const interval = setInterval(async () => {
-      const linting = await props.api.getLinting(modelId)
+      const linting = await props.api.getLinting(modelId, 'slowest')
       if (linting.status !== 'linting') {
         setLinting(linting)
         clearInterval(interval)

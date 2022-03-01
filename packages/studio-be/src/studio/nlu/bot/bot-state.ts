@@ -1,4 +1,9 @@
-import { TrainInput as StanTrainInput, TrainingState as StanTrainingState } from '@botpress/nlu-client'
+import {
+  TrainInput as StanTrainInput,
+  TrainingState as StanTrainingState,
+  IssueComputationSpeed,
+  LintingState
+} from '@botpress/nlu-client'
 import crypto from 'crypto'
 import _ from 'lodash'
 import { DefinitionsRepository } from '../definitions-repository'
@@ -35,9 +40,9 @@ export class BotState {
     return entry
   }
 
-  public lint = async (language: string): Promise<string> => {
+  public lint = async (language: string, speed: IssueComputationSpeed): Promise<string> => {
     const trainset = await this._getTrainSet(language)
-    return this._nluClient.startLinting(this._botId, trainset)
+    return this._nluClient.startLinting(this._botId, trainset, speed)
   }
 
   public cancelTraining = async (language: string) => {
@@ -61,9 +66,8 @@ export class BotState {
     return remoteTrainingState && { ...remoteTrainingState, ...modelEntry }
   }
 
-  // TODO: use actual typings of linting
-  public getLinting = async (modelId: string): Promise<any> => {
-    return this._nluClient.getLinting(this._botId, modelId)
+  public getLinting = async (modelId: string, speed: IssueComputationSpeed): Promise<LintingState | undefined> => {
+    return this._nluClient.getLinting(this._botId, modelId, speed)
   }
 
   public getModel = async (language: string): Promise<ModelEntry | undefined> => {
@@ -117,9 +121,6 @@ export class BotState {
 
   private _hashTrainSet = (ts: StanTrainInput): string => {
     const content = [...ts.entities, ...ts.intents]
-    return crypto
-      .createHash('sha1')
-      .update(JSON.stringify(content))
-      .digest('hex')
+    return crypto.createHash('sha1').update(JSON.stringify(content)).digest('hex')
   }
 }

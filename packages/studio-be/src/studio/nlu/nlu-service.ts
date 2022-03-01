@@ -1,4 +1,4 @@
-import { Specifications as StanSpecifications } from '@botpress/nlu-client'
+import { IssueComputationSpeed, Specifications as StanSpecifications } from '@botpress/nlu-client'
 import { Logger } from 'botpress/sdk'
 import { NLUProgressEvent, Training as BpTraining } from 'common/nlu-training'
 import { coreActions } from 'core/app/core-client'
@@ -163,20 +163,20 @@ export class NLUService {
     void bot.train(language)
   }
 
-  public async lint(botId: string, language: string) {
+  public async lint(botId: string, language: string, speed: IssueComputationSpeed) {
     const bot = this._bots[botId]
     if (!bot) {
       throw new BotNotMountedError(botId)
     }
-    return bot.lint(language)
+    return bot.lint(language, speed)
   }
 
-  public async getLinting(botId: string, modelId: string) {
+  public async getLinting(botId: string, modelId: string, speed: IssueComputationSpeed) {
     const bot = this._bots[botId]
     if (!bot) {
       throw new BotNotMountedError(botId)
     }
-    return bot.getLinting(modelId)
+    return bot.getLinting(modelId, speed)
   }
 
   private _getWebsocket = () => {

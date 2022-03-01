@@ -8,12 +8,6 @@ import { NLUService } from './nlu-service'
 
 const INTENTS_DIR = './intents'
 
-export const trimUtterances = (intent: sdk.NLU.IntentDefinition) => {
-  for (const lang of Object.keys(intent.utterances)) {
-    intent.utterances[lang] = intent.utterances[lang].map((u) => u.trim())
-  }
-}
-
 export class IntentRepository {
   constructor(private ghostService: GhostService, private nluService: NLUService) {}
 
@@ -54,8 +48,6 @@ export class IntentRepository {
           throw Error(`"${entity}" is neither a system entity nor a custom entity`)
         }
       })
-
-    trimUtterances(intent)
 
     await this.ghostService.forBot(botId).upsertFile(INTENTS_DIR, `${name}.json`, JSON.stringify(intent, undefined, 2))
     return intent

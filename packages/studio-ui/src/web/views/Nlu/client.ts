@@ -1,3 +1,4 @@
+import { IssueComputationSpeed } from '@botpress/nlu-client'
 import axios from 'axios'
 import { NLU } from 'botpress/sdk'
 
@@ -25,7 +26,9 @@ export const makeNLUClient = () => {
     updateEntity: (targetEntityId: string, entity: NLU.EntityDefinition): Promise<void> =>
       client.post(`/entities/${targetEntityId}`, entity),
     deleteEntity: (entityId: string): Promise<void> => client.post(`/entities/${entityId}/delete`),
-    startLinting: (lang: string): Promise<string> => client.post(`/lint/${lang}`).then(res => res.data),
-    getLinting: (modelId: string) => client.get(`/lint/${modelId}`).then(res => res.data)
+    startLinting: (lang: string, speed: IssueComputationSpeed): Promise<string> =>
+      client.post(`/lint/${lang}/${speed}`).then((res) => res.data),
+    getLinting: (modelId: string, speed: IssueComputationSpeed) =>
+      client.get(`/lint/${modelId}/${speed}`).then((res) => res.data)
   }
 }

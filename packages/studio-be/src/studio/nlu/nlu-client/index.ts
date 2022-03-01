@@ -3,7 +3,8 @@ import {
   Specifications as StanSpecifications,
   TrainingState as StanTrainingState,
   LintingState,
-  TrainInput as StanTrainInput
+  TrainInput as StanTrainInput,
+  IssueComputationSpeed
 } from '@botpress/nlu-client'
 import { CloudConfig } from 'botpress/sdk'
 import _ from 'lodash'
@@ -83,15 +84,16 @@ export class NLUClient {
     }
   }
 
-  public async startLinting(appId: string, trainInput: StanTrainInput): Promise<string> {
+  public async startLinting(appId: string, trainInput: StanTrainInput, speed: IssueComputationSpeed): Promise<string> {
     const { entities, intents, language } = trainInput
 
     const contexts = _(intents)
-      .flatMap(i => i.contexts)
+      .flatMap((i) => i.contexts)
       .uniq()
       .value()
 
     const response = await this._client.startLinting(appId, {
+      speed,
       contexts,
       entities,
       intents,
@@ -105,8 +107,12 @@ export class NLUClient {
     return response.modelId
   }
 
-  public async getLinting(appId: string, modelId: string): Promise<LintingState | undefined> {
-    const response = await this._client.getLintingStatus(appId, modelId)
+  public async getLinting(
+    appId: string,
+    modelId: string,
+    speed: IssueComputationSpeed
+  ): Promise<LintingState | undefined> {
+    const response = await this._client.getLintingStatus(appId, modelId, speed)
     if (response.success) {
       return response.session
     }

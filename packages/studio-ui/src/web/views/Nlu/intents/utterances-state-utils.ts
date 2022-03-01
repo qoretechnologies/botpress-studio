@@ -52,16 +52,10 @@ export const textNodesFromUtterance = (
       const from = previousSlot?.cleanPosition.end ?? 0
       const to = pslot.cleanPosition.start
 
-      /**
-       * This condition won't work if the utterance contains consecutive or leading spaces, but the issue E_004 can help flag those.
-       * TODO:
-       * - either report issue E_004 (so when its fixed by the user we can display E_000)
-       * - modify E_000 linter in nlu server so it works without cleaning the utterance
-       */
-      const issue: DatasetIssue<'E_000'> | undefined = issues.find(
-        (issue) =>
-          issue.data.cleanCharStart === pslot.cleanPosition.start && issue.data.cleanCharEnd === pslot.cleanPosition.end
-      )
+      const issue: DatasetIssue<'E_000'> | undefined = issues.find((issue) => {
+        const { clean } = issue.data.charPos
+        return clean.start === pslot.cleanPosition.start && clean.end === pslot.cleanPosition.end
+      })
 
       const slotExists = allSlots.some((s) => s.name === pslot.name)
       const pslotNode = slotExists ? slotNode(pslot, idx, issue) : emptySlotNode(pslot)
@@ -100,7 +94,7 @@ export const utterancesToValue = (
           nodes: textNodesFromUtterance(
             allSlots,
             summary,
-            issues.filter((issue) => issue.data.utteranceIdx === 0),
+            issues.filter((issue) => issue.data.utterance.idx === 0),
             0
           )
         },
@@ -111,7 +105,7 @@ export const utterancesToValue = (
           nodes: textNodesFromUtterance(
             allSlots,
             text,
-            issues.filter((issue) => issue.data.utteranceIdx - 1 === i),
+            issues.filter((issue) => issue.data.utterance.idx - 1 === i),
             i + 1
           )
         }))
