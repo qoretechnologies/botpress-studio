@@ -33,7 +33,7 @@ export const getOrCreate = (type: 'subscriber' | 'commands' | 'socket', url?: st
 
     const redisOptions: RedisOptions = {
       retryStrategy: RETRY_STRATEGY,
-      connectionName: `${BP_REDIS_SCOPE ? `${BP_REDIS_SCOPE}/` : ''}studio/${SERVER_ID}`
+      connectionName: `${BP_REDIS_SCOPE ? `${BP_REDIS_SCOPE}/` : ''}studio/${SERVER_ID}/${process.STUDIO_VERSION}`
     }
 
     if (redisNodes.length > 0) {
