@@ -29,6 +29,9 @@
     "tree-model": "^1.0.7",
     "web-vitals": "^1.0.1"
   },
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
   "scripts": {
     "build": "yarn doctree && rollup -c",
     "watch": "yarn doctree && rollup -c -w",
