@@ -1,3 +1,290 @@
-.style {
-  color: blue
+@import '~normalize.css';
+@import '~@blueprintjs/core/lib/css/blueprint.css';
+@import '~@blueprintjs/icons/lib/css/blueprint-icons.css';
+@import '~@blueprintjs/core/lib/scss/variables';
+
+$bot-blue: #0070f7;
+
+.editView {
+  text-align: center;
+  background-color: $light-gray5;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: flex-start;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.editView::-webkit-scrollbar {
+  display: none;
+}
+
+.optionMenu {
+  margin-top: 4px;
+  z-index: 100;
+  position: absolute;
+  text-align: right;
+  background-color: white;
+  padding: 4px;
+  border-radius: 8px;
+  font-size: 14px;
+  right: 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid $gray1;
+
+  span {
+    width: 100%;
+    padding: 4px 8px;
+    text-align: left;
+    border-radius: 4px;
+    color: $dark-gray2;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $light-gray5;
+    }
+  }
+
+  .delete {
+    font-weight: bold;
+    color: red;
+  }
+}
+
+.node {
+  width: 350px;
+  text-align: left;
+  margin: 24px;
+  z-index: 5;
+  -ms-overflow-style: none;
+  user-select: none;
+}
+
+.nodeLabel {
+  color: $bot-blue;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.nodeContent {
+  border: 2px solid $bot-blue;
+  border-radius: 8px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  box-shadow: 0px 4px 0px #0070f7;
+}
+
+.nodeBar {
+  border: 3px solid $bot-blue;
+  background-color: $bot-blue;
+  width: 100%;
+  margin-top: none;
+  border-radius: 5px;
+  transform: translateY(-4px);
+}
+
+.nodeAction {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.contentWell {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  background-color: $light-gray5;
+  width: 100%;
+  min-height: 6.4rem;
+  border-radius: 7px;
+  padding: 12px;
+  border: 1px solid $gray2;
+}
+
+.wellLabel {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.highlightBorder {
+  border: 1px dashed $bot-blue;
+  background-color: white;
+}
+
+.empty {
+  align-self: center;
+  text-align: center;
+  margin: auto 0;
+  color: $bot-blue;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 4px;
+
+  &:not(:only-child) {
+    display: none;
+  }
+
+  label {
+    color: $gray2;
+    margin-bottom: 0;
+  }
+}
+
+.block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.blockLabel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 24px;
+}
+
+.label {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.blockName {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.blockOptions {
+  vertical-align: middle;
+  user-select: none;
+  position: relative; //@TMP: here
+}
+
+.optionButton {
+  padding: 2px;
+  cursor: pointer;
+}
+
+.blockContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+
+  .content {
+    border: 2px solid $dark-gray2;
+  }
+  &:hover {
+    cursor: pointer;
+    .grabber {
+      opacity: 1;
+    }
+  }
+}
+
+.blockID {
+  color: $dark-gray2;
+}
+
+.transitionContent {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  position: relative;
+
+  .content {
+    background-color: $light-gray2;
+  }
+  &:hover {
+    cursor: pointer;
+    .grabber {
+      opacity: 1;
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  min-height: 4rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 7px;
+  font-weight: 600;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grabber {
+  // height: 32px;
+  // // width: 16px;
+  // border-radius: 5px;
+  color: $gray1;
+  transition: opacity 150ms;
+  opacity: 0;
+}
+
+.enterNode {
+  position: absolute;
+  top: 8px;
+  right: calc(100% + 8px);
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  // user-select: text;
+}
+
+.dot {
+  height: 14px;
+  width: 14px;
+  background-color: $bot-blue;
+  border-radius: 100%;
+}
+
+.exitNode {
+  position: absolute;
+  top: 4px;
+  left: calc(100% + 20px);
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  cursor: default;
+  // user-select: text;
+}
+
+.sideNode {
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding: 8px 8px;
+  background-color: white;
+  border: 2px solid $bot-blue;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.invisible {
+  visibility: hidden;
 }
