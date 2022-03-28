@@ -2,9 +2,8 @@
 // Please do not change this file!
 interface CssExports {
   'container': string;
-  'diagram': string;
-  'head-container': string;
-  'wrapper': string;
+  'else': string;
+  'tabsBar': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

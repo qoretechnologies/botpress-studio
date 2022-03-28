@@ -1,0 +1,19 @@
+.container {
+  width: 350px;
+  position: absolute;
+  right: 10px;
+  z-index: 100;
+}
+
+.tabsBar {
+  width: 100%;
+  background-color: #252a31;
+  margin: 6px 10px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.else {
+  width: 100px;
+  height: 200px;
+  background-color: red;
+}

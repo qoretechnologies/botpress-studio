@@ -51,13 +51,20 @@ const WorkflowToolbar = ({
   )
 
   return (
-    <MainLayout.Toolbar
-      className={style.header}
-      tabs={tabs}
-      buttons={flowButtons}
-      currentTab={currentTab}
-      tabChange={tabChange}
-      rightContent={searchBar}
+    // <MainLayout.Toolbar
+    //   className={style.header}
+    //   tabs={tabs}
+    //   buttons={flowButtons}
+    //   currentTab={currentTab}
+    //   tabChange={tabChange}
+    //   rightContent={searchBar}
+    // />
+    <SearchBar
+      id="input-highlight-name"
+      className={style.noPadding}
+      value={highlightFilter}
+      placeholder={lang.tr('studio.flow.filterNodes')}
+      onChange={handleFilterChanged}
     />
   )
 }

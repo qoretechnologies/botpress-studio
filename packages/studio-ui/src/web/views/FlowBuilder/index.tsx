@@ -20,6 +20,7 @@ import { isOperationAllowed } from '~/components/Shared/Utils/AccessControl'
 import { RootReducer } from '~/reducers'
 
 import Diagram from './diagram'
+import NuInspect from './NuInspect'
 import SidePanel, { PanelPermissions, SidePanelInspector } from './sidePanelFlows'
 import SkillsBuilder from './skills'
 import style from './style.scss'
@@ -157,14 +158,13 @@ const FlowBuilder = (props: Props) => {
 
   return (
     <Container keyHandlers={keyHandlers}>
-      <SidePanel
+      {/* <SidePanel
         onDeleteSelectedElements={() => diagram?.deleteSelectedElements()}
         readOnly={readOnly}
         mutexInfo={mutex}
         permissions={actions}
         onCreateFlow={createFlow}
-      />
-
+      /> */}
       <div className={style.container}>
         <div className={style.diagram}>
           <Diagram
@@ -182,9 +182,9 @@ const FlowBuilder = (props: Props) => {
             }}
           />
         </div>
-        <SidePanelInspector />
+        <NuInspect />
+        {/* <SidePanelInspector /> */}
       </div>
-
       <SkillsBuilder />
     </Container>
   )

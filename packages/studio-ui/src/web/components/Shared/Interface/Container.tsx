@@ -23,21 +23,19 @@ const Container = (props: ContainerProps & StateProps & DispatchProps) => {
   const children = React.Children.toArray(props.children)
 
   return (
-    <HotKeys handlers={keyHandlers} keyMap={props.keyMap || {}} className={style.fullsize} focused>
-      <div className={cx(style.container, { [style.sidePanel_hidden]: !props.explorerOpen })}>
-        <SplitPane
+    // <HotKeys handlers={keyHandlers} keyMap={props.keyMap || {}} className={style.fullsize} focused>
+    <div className={style.container}>
+      {/* <SplitPane
           split={'vertical'}
           defaultSize={width}
           size={props.explorerOpen ? width : 0}
           pane2Style={{ overflowX: 'auto' }}
-        >
-          {children[0]}
-          <div className={cx(style.fullsize, { [style.yOverflowScroll]: props.yOverflowScroll })}>
-            {children.slice(1)}
-          </div>
-        </SplitPane>
-      </div>
-    </HotKeys>
+        > */}
+      {/* {children[0]} */}
+      <div className={style.fullsize}>{children}</div>
+      {/* </SplitPane> */}
+    </div>
+    // </HotKeys>
   )
 }
 

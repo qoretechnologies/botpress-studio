@@ -678,48 +678,42 @@ class Diagram extends Component<Props> {
     const canAdd = !this.props.defaultLang || this.props.defaultLang === this.props.currentLang
 
     return (
-      <MainLayout.Wrapper>
-        <WorkflowToolbar
-          highlightFilter={this.props.highlightFilter}
-          handleFilterChanged={(value) => this.props.handleFilterChanged({ target: { value } })}
-        />
-        <div
-          id="diagramContainer"
-          ref={(ref) => (this.diagramContainer = ref)}
-          tabIndex={1}
-          style={{ outline: 'none', width: '100%', height: '100%' }}
-          onContextMenu={this.handleContextMenu}
-          onDrop={this.handleToolDropped}
-          onDragOver={(event) => event.preventDefault()}
-        >
-          <div className={style.floatingInfo}>
-            <DiagramToolbar
-              currentFlow={this.props.currentFlow}
-              handleFlowWideClicked={this.handleFlowWideClicked}
-              mutexInfo={this.props.mutexInfo}
-              highlightNode={(node) => {
-                this.manager.setHighlightedNodes([node])
-                this.forceUpdate()
-              }}
-            />
-          </div>
-
-          <DiagramWidget
-            ref={(w) => (this.diagramWidget = w)}
-            deleteKeys={[]}
-            diagramEngine={this.diagramEngine}
-            maxNumberPointsPerLink={MAX_NUMBER_OF_POINTS_PER_LINK}
-            inverseZoom
+      <div
+        id="diagramContainer"
+        ref={(ref) => (this.diagramContainer = ref)}
+        tabIndex={1}
+        style={{ outline: 'none', width: '100%', height: '100%' }}
+        onContextMenu={this.handleContextMenu}
+        onDrop={this.handleToolDropped}
+        onDragOver={(event) => event.preventDefault()}
+      >
+        <div className={style.floatingInfo}>
+          <DiagramToolbar
+            currentFlow={this.props.currentFlow}
+            handleFlowWideClicked={this.handleFlowWideClicked}
+            mutexInfo={this.props.mutexInfo}
+            highlightNode={(node) => {
+              this.manager.setHighlightedNodes([node])
+              this.forceUpdate()
+            }}
           />
-          <ZoomToolbar
-            zoomIn={this.manager.zoomIn.bind(this.manager)}
-            zoomOut={this.manager.zoomOut.bind(this.manager)}
-            zoomToLevel={this.manager.zoomToLevel.bind(this.manager)}
-            zoomToFit={this.manager.zoomToFit.bind(this.manager)}
-          />
-          {canAdd && <NodeToolbar />}
         </div>
-      </MainLayout.Wrapper>
+
+        <DiagramWidget
+          ref={(w) => (this.diagramWidget = w)}
+          deleteKeys={[]}
+          diagramEngine={this.diagramEngine}
+          maxNumberPointsPerLink={MAX_NUMBER_OF_POINTS_PER_LINK}
+          inverseZoom
+        />
+        <ZoomToolbar
+          zoomIn={this.manager.zoomIn.bind(this.manager)}
+          zoomOut={this.manager.zoomOut.bind(this.manager)}
+          zoomToLevel={this.manager.zoomToLevel.bind(this.manager)}
+          zoomToFit={this.manager.zoomToFit.bind(this.manager)}
+        />
+        {canAdd && <NodeToolbar />}
+      </div>
     )
   }
 }
