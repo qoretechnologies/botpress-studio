@@ -1,8 +1,11 @@
+@import '~@blueprintjs/core/lib/scss/variables';
+
 .container {
   width: 350px;
   position: absolute;
   right: 10px;
   z-index: 100;
+  border-radius: 8px;
 }
 
 .tabsBar {
@@ -12,8 +15,157 @@
   border-radius: 8px 8px 0px 0px;
 }
 
-.else {
-  width: 100px;
-  height: 200px;
-  background-color: red;
+.nodeInspector {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.8rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.optionsHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  p {
+    font-size: 1.2rem;
+    color: $dark-gray2;
+    font-style: italic;
+  }
+}
+
+.nodeName {
+  width: 100%;
+  padding: 0.4rem;
+  border: none;
+  border-bottom: 1px solid $dark-gray2;
+  font-size: 1.8rem;
+  color: $dark-gray5;
+  font-weight: 500;
+}
+
+.options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.optionLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  h4 {
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+}
+
+.blockWell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background-color: $light-gray5;
+  width: 100%;
+  min-height: 4rem;
+  border-radius: 7px;
+  padding: 1.2rem;
+  border: 1px solid $gray2;
+}
+
+.block {
+  width: 100%;
+  height: 3.2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: 1.2rem;
+  align-items: center;
+  user-select: none;
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0.8rem 1.2rem;
+    background-color: white;
+    border: 1px solid $dark-gray2;
+    border-radius: 0.8rem;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    span {
+      flex: 1;
+    }
+  }
+}
+
+.grabber {
+  &:hover {
+    cursor: grab;
+  }
+}
+
+.add {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.optionButton {
+  padding: 2px;
+  cursor: pointer;
+}
+
+.blockOptions {
+  vertical-align: middle;
+  user-select: none;
+  position: relative; //@TMP: here
+}
+
+.optionMenu {
+  margin-top: 4px;
+  z-index: 100;
+  position: absolute;
+  text-align: right;
+  background-color: white;
+  padding: 4px;
+  border-radius: 8px;
+  font-size: 14px;
+  right: 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid $gray1;
+
+  span {
+    width: 100%;
+    padding: 4px 8px;
+    text-align: left;
+    border-radius: 4px;
+    color: $dark-gray2;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $light-gray5;
+    }
+  }
+
+  .delete {
+    font-weight: bold;
+    color: red;
+  }
 }
