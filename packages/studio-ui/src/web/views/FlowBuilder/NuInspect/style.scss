@@ -15,7 +15,7 @@
   border-radius: 8px 8px 0px 0px;
 }
 
-.nodeInspector {
+.inspectorWindow {
   width: 100%;
   background-color: white;
   display: flex;
@@ -23,6 +23,7 @@
   gap: 1rem;
   padding: 1.8rem;
   border-radius: 8px;
+  gap: 1rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,23 +31,53 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
+  margin-bottom: 1rem;
 
   p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: $dark-gray2;
-    font-style: italic;
+  }
+
+  textarea {
+    border-bottom: 1px solid #fff;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    width: 100%;
+    max-width: 100%;
+    resize: none;
+    height: fit-content;
+    transition: all 50ms linear;
+
+    &:hover {
+      border-color: $dark-gray2;
+    }
+
+    &:focus {
+      border-color: $dark-gray2;
+    }
   }
 }
 
 .nodeName {
   width: 100%;
-  padding: 0.4rem;
-  border: none;
-  border-bottom: 1px solid $dark-gray2;
+  border-bottom: 1px solid #fff;
+  border-left: none;
+  border-right: none;
+  border-top: none;
   font-size: 1.8rem;
   color: $dark-gray5;
   font-weight: 500;
+  transition: all 50ms linear;
+
+  &:hover {
+    border-color: $dark-gray2;
+  }
+
+  &:focus {
+    border-color: $dark-gray2;
+  }
 }
 
 .options {
@@ -71,6 +102,24 @@
     flex: 1;
     font-size: 1.4rem;
     font-weight: 500;
+  }
+}
+
+.blockLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 28px;
+
+  h3 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: $dark-gray5;
+    margin: 0;
+  }
+
+  span {
+    flex: 1;
   }
 }
 
@@ -120,8 +169,18 @@
 }
 
 .add {
+  height: 1.8rem;
   &:hover {
     cursor: pointer;
+    transition: all 50ms linear;
+
+    rect {
+      fill: #0070f7;
+      stroke: #fff;
+    }
+    path {
+      fill: #fff;
+    }
   }
 }
 
@@ -169,4 +228,98 @@
     font-weight: bold;
     color: red;
   }
+}
+
+.label {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 0.6rem;
+
+  h4 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    flex: 1;
+
+    #req {
+      color: red;
+    }
+
+    #text {
+      border-bottom: 1px dashed $dark-gray5;
+
+      &:hover {
+        cursor: help;
+      }
+    }
+  }
+}
+
+.dynamicInputButton {
+  transition: all 50ms linear;
+  &:hover {
+    path {
+      fill: $blue4;
+    }
+    cursor: pointer;
+  }
+}
+
+.msgComponent {
+  width: 100%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.8rem;
+  border: 1px solid $gray5;
+}
+
+.messageHeader {
+  display: flex;
+  flex-direction: row;
+  background-color: $light-gray4;
+  padding: 0.8rem;
+  border-bottom: 1px solid $gray5;
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
+
+  p {
+    flex: 1;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+}
+
+.messageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 3.6rem;
+  justify-content: center;
+}
+
+.msg {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $gray5;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.placeholderText {
+  font-style: italic;
+  text-align: center;
+  color: $gray3;
+  font-size: 1.2rem;
 }
