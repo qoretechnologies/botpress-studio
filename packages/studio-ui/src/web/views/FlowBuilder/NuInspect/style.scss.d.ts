@@ -3,8 +3,13 @@
 interface CssExports {
   'add': string;
   'block': string;
+  'blockIconHolder': string;
   'blockLabel': string;
+  'blockLibrary': string;
+  'blockList': string;
+  'blockListItem': string;
   'blockOptions': string;
+  'blockSearch': string;
   'blockWell': string;
   'container': string;
   'content': string;

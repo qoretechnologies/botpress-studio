@@ -2,7 +2,7 @@
 // import { lang } from 'botpress/shared'
 // import { FlowMutex } from 'common/typings'
 import { Tab, Tabs } from '@blueprintjs/core'
-import _ from 'lodash'
+import _, { divide } from 'lodash'
 import React, { FC, Fragment, forwardRef, RefObject, useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 // import { getCurrentFlow } from '~/reducers'
@@ -11,7 +11,48 @@ import style from './style.scss'
 
 interface OwnProps {}
 
-const BlockList = () => {}
+const BlockSearch = () => {
+  return <input type="text" className={style.blockSearch} />
+}
+
+const BlockListItem = ({ blockName }) => {
+  return (
+    <div className={style.blockListItem}>
+      <div className={style.blockIconHolder}>
+        <BlockIcon />
+      </div>
+      <span>{blockName}</span>
+    </div>
+  )
+}
+
+const BlockList = () => {
+  return (
+    <div className={style.blockList}>
+      <BlockListItem blockName="Code" />
+      <BlockListItem blockName="Transition" />
+      <BlockListItem blockName="Image" />
+      <BlockListItem blockName="Action Button" />
+      <BlockListItem blockName="Audio" />
+      <BlockListItem blockName="Card" />
+      <BlockListItem blockName="Carousel" />
+      <BlockListItem blockName="Dropdown" />
+      <BlockListItem blockName="File" />
+      <BlockListItem blockName="Location" />
+      <BlockListItem blockName="Video" />
+    </div>
+  )
+}
+
+const BlockLibrary = () => {
+  return (
+    <div className={style.blockLibrary}>
+      <h3>Block Library</h3>
+      <BlockSearch />
+      <BlockList />
+    </div>
+  )
+}
 
 const Block = () => {
   const [active, setActive] = useState(false)
@@ -55,6 +96,7 @@ const Block = () => {
 const NodePanel = () => {
   return (
     <div className={style.inspectorWindow}>
+      <BlockLibrary />
       <div className={style.optionsHeader}>
         {/* Node Name */}
         <h3>Fake Node</h3>
@@ -312,6 +354,25 @@ const DynamicInputButton = () => {
   )
 }
 
+const BlockIcon = () => {
+  return (
+    <svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M4.23804 8.11321L10.2942 2.17371C10.3438 2.11887 10.4036 2.07517 10.47 2.04529C10.5364 2.01542 10.608 2 10.6803 2C10.7527 2 10.8242 2.01542 10.8906 2.04529C10.957 2.07517 11.0169 2.11887 11.0664 2.17371L15.9871 8.11321C16.0527 8.19536 16.0946 8.29509 16.1082 8.40096C16.1217 8.50684 16.1062 8.61453 16.0635 8.71165C16.0207 8.80877 15.9525 8.89136 15.8667 8.94993C15.7809 9.0085 15.6809 9.04068 15.5783 9.04272H4.58629C4.48882 9.03005 4.39643 8.99019 4.31892 8.92738C4.24142 8.86457 4.18168 8.78116 4.146 8.68593C4.11032 8.59069 4.10004 8.48716 4.11625 8.38635C4.13245 8.28553 4.17453 8.19118 4.23804 8.11321Z"
+        fill="#595959"
+      />
+      <path
+        d="M0.114896 8.9124L4.006 5.11553C4.08183 5.04131 4.182 5 4.2861 5C4.3902 5 4.49037 5.04131 4.56619 5.11553L8.13934 8.89663C8.19596 8.93881 8.23772 8.99921 8.25818 9.06847C8.27864 9.13773 8.27669 9.21202 8.25261 9.28002C8.22854 9.34801 8.18368 9.40594 8.12493 9.44483C8.06617 9.48373 7.99676 9.50144 7.92738 9.49532H0.357149C0.288919 9.50414 0.219767 9.48973 0.160084 9.45421C0.100401 9.41869 0.0534024 9.364 0.026113 9.29833C-0.00117651 9.23267 -0.00726796 9.15954 0.00873987 9.08996C0.0247477 9.02038 0.0619868 8.95809 0.114896 8.9124V8.9124Z"
+        fill="#595959"
+      />
+      <path
+        d="M4.63167 3.21617C5.36752 3.21617 5.96403 2.59545 5.96403 1.82977C5.96403 1.06408 5.36752 0.443359 4.63167 0.443359C3.89582 0.443359 3.29929 1.06408 3.29929 1.82977C3.29929 2.59545 3.89582 3.21617 4.63167 3.21617Z"
+        fill="#595959"
+      />
+    </svg>
+  )
+}
+
 // const TabsBar = () => {
 //   return <div className={style.else}> hello</div>
 // }
@@ -320,8 +381,8 @@ const NuInspect: FC<OwnProps> = (props) => {
   return (
     <div className={style.container}>
       <Tabs id="TabsExample" onChange={console.log} selectedTabId="ng">
-        <Tab id="mg" title="Node" panel={<NodePanel />} />
-        <Tab id="ng" title="SomeContent" panel={<InspectorPanel />} />
+        <Tab id="ng" title="Node" panel={<NodePanel />} />
+        <Tab id="mg" title="SomeContent" panel={<InspectorPanel />} />
       </Tabs>
     </div>
   )

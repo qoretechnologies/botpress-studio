@@ -16,6 +16,7 @@
 }
 
 .inspectorWindow {
+  position: relative;
   width: 100%;
   background-color: white;
   display: flex;
@@ -321,4 +322,85 @@
   text-align: center;
   color: $gray3;
   font-size: 1.2rem;
+}
+
+.blockLibrary {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.8rem;
+  border-radius: 8px;
+  gap: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  width: 22.5rem;
+  position: absolute;
+  left: -23.5rem;
+  top: 0;
+
+  h3 {
+    font-size: 1.8rem;
+    margin: 0.5rem 0 0 0;
+    font-weight: 500;
+  }
+}
+
+.blockSearch {
+  width: 100%;
+  height: 3.6rem;
+  background-color: $light-gray5;
+  border-radius: 0.8rem;
+  border: 1px solid $gray5;
+  padding: 0 0.8rem;
+}
+
+.blockList {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1.2rem;
+  place-items: center;
+  max-height: 50rem;
+  overflow-y: scroll;
+  scrollbar-width: 0;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+}
+
+.blockListItem {
+  width: 5.5rem;
+  text-align: center;
+  grid-column: span 1 / span 1;
+  grid-row: span 1 / span 1;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+
+  .blockIconHolder {
+    padding: 0.5rem;
+    aspect-ratio: 1 / 1;
+    border: 1px solid $gray5;
+    border-radius: 0.8rem;
+    background-color: $light-gray5;
+    transition: all 50ms linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      transform: scale(1.05);
+      cursor: grab;
+    }
+  }
+
+  span {
+    font-size: 1.2rem;
+    font-weight: 400;
+    align-self: center;
+    display: block;
+    margin-top: 0.8rem;
+  }
 }
