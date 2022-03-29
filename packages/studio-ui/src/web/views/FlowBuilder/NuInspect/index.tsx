@@ -11,7 +11,7 @@ import style from './style.scss'
 
 interface OwnProps {}
 
-const BlockPanel = () => {}
+const BlockList = () => {}
 
 const Block = () => {
   const [active, setActive] = useState(false)
@@ -54,11 +54,11 @@ const Block = () => {
 
 const NodePanel = () => {
   return (
-    <div className={style.nodeInspector}>
-      {/* Node Name */}
-      {/* Node Description */}
+    <div className={style.inspectorWindow}>
       <div className={style.optionsHeader}>
-        <input type="text" value="SuperNode" className={style.nodeName} />
+        {/* Node Name */}
+        <h3>Fake Node</h3>
+        {/* Node Description */}
         <p>This is a node or a skill</p>
       </div>
 
@@ -97,26 +97,102 @@ const NodePanel = () => {
     </div>
   )
 }
-const InspectorPanel = () => {
+
+const Label = () => {
   return (
-    <div className={style.blockInspector}>
-      {/* Block Type | Content ID */}
-      {/* Block Description */}
+    <div className={style.label}>
+      <h4>
+        <span id={style.text}>Message</span>
+        <span id={style.req}>&nbsp;*</span>
+      </h4>
+      <DynamicInputButton />
+    </div>
+  )
+}
 
-      {/* Block Options */}
+const Msg = ({ msg }) => {
+  const [active, setActive] = useState(false)
+  const menuRef: RefObject<HTMLDivElement> = useRef(null)
 
-      <div className={style.nodeOptions}>
-        {/* Node Name */}
-        {/* Node Description */}
-        <div className={style.optionsHeader}>
-          <span className={style.blockLabel}>
-            <h3>Card |</h3>
-            <span>#!builing_card-######</span>
-          </span>
-          <p></p>
+  useEffect(() => {
+    const clickListener = (event) => {
+      if (event.target !== menuRef.current) {
+        setActive(false)
+      }
+    }
+
+    if (active) {
+      window.addEventListener('click', clickListener)
+    }
+
+    return () => {
+      window.removeEventListener('click', clickListener)
+    }
+  }, [active, setActive, menuRef])
+  return (
+    <div className={style.msg}>
+      <span>{msg}</span>
+      <div className={style.blockOptions}>
+        <OptionButton
+          onClick={() => {
+            setActive(!active)
+          }}
+        />
+
+        {active ? <DropdownMenu ref={menuRef} /> : null}
+      </div>
+    </div>
+  )
+}
+
+const Messages = () => {
+  const msgsTmp: Array<string> = [
+    // 'jghjg', 'kiguyg'
+  ]
+  return (
+    <div className={style.msgComponent}>
+      {/* Label, tooltip on hover, required | super input */}
+      <Label />
+      {/* wrapper */}
+      <div className={style.messages}>
+        {/* Message Box and plus button */}
+        <div className={style.messageHeader}>
+          <p>Click to add message</p>
+          <AddIcon />
         </div>
 
-        <div className={style.options}>{/* OPTIONS */}</div>
+        {/* Message Container */}
+        <div className={style.messageContainer}>
+          {msgsTmp.length ? (
+            msgsTmp.map((x, index) => <Msg msg={x} key={index} />)
+          ) : (
+            <div className={style.placeholderText}>1 message required</div>
+          )}
+        </div>
+      </div>
+
+      {/* 1 message required  */}
+    </div>
+  )
+}
+
+const InspectorPanel = () => {
+  return (
+    <div className={style.inspectorWindow}>
+      <div className={style.optionsHeader}>
+        {/* Block Type | Content ID */}
+        <div className={style.blockLabel}>
+          <h3>Text</h3>
+          <h3>&nbsp;|&nbsp;</h3>
+          <span>#!builing_card-######</span>
+        </div>
+        {/* Block Description */}
+        <p>A regular text message with optional indicators and alternates</p>
+      </div>
+
+      {/* Block Options */}
+      <div className={style.options}>
+        <Messages />
       </div>
     </div>
   )
@@ -159,7 +235,15 @@ const DropdownMenu = forwardRef((_, ref: RefObject<HTMLDivElement>) => {
 
 const AddIcon = () => {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ height: 1.8 + 'rem' }}
+      className={style.add}
+    >
       <rect x="0.612488" y="0.591797" width="16.8875" height="16.8169" rx="3.5" fill="white" stroke="#0070F7" />
       <path
         d="M13.3801 7.9358H9.99611V4.5518H8.12411V7.9358H4.74011V9.8078H8.12411V13.1918H9.99611V9.8078H13.3801V7.9358Z"
@@ -209,6 +293,25 @@ const Grabber = () => {
   )
 }
 
+const DynamicInputButton = () => {
+  return (
+    <svg
+      style={{ height: 1.6 + 'rem' }}
+      width="22"
+      height="14"
+      viewBox="0 0 22 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={style.dynamicInputButton}
+    >
+      <path
+        d="M4.91902 2.418H6.08102V0.99H4.82102C2.98702 0.99 2.03502 1.788 2.03502 3.342C2.03502 3.706 2.07702 4 2.11902 4.294C2.16102 4.588 2.21702 4.896 2.21702 5.274C2.21702 6.058 1.89502 6.338 0.999023 6.338H0.159024V7.738H0.999023C1.89502 7.738 2.21702 8.018 2.21702 8.802C2.21702 9.18 2.17502 9.488 2.11902 9.782C2.06302 10.076 2.03502 10.37 2.03502 10.734C2.03502 12.288 2.98702 13.086 4.82102 13.086H6.08102V11.658H4.91902C4.06502 11.658 3.68702 11.35 3.68702 10.678C3.68702 10.314 3.71502 9.992 3.75702 9.67C3.79902 9.348 3.81302 9.026 3.81302 8.69C3.81302 7.752 3.35102 7.164 2.44102 7.052V7.024C3.35102 6.912 3.81302 6.324 3.81302 5.386C3.81302 5.05 3.78502 4.728 3.75702 4.406C3.72902 4.084 3.68702 3.762 3.68702 3.398C3.68702 2.726 4.06502 2.418 4.91902 2.418ZM14.461 11L12.025 7.486L14.321 4.14H12.459L11.129 6.184L9.70101 4.14H7.69901L9.99501 7.444L7.55901 11H9.42101L10.891 8.746L12.459 11H14.461ZM21.007 6.338C20.111 6.338 19.789 6.058 19.789 5.274C19.789 4.896 19.831 4.588 19.887 4.294C19.943 4 19.971 3.706 19.971 3.342C19.971 1.788 19.019 0.99 17.185 0.99H15.925V2.418H17.087C17.941 2.418 18.319 2.726 18.319 3.398C18.319 3.762 18.291 4.084 18.249 4.406C18.207 4.728 18.193 5.05 18.193 5.386C18.193 6.324 18.655 6.912 19.565 7.024V7.052C18.655 7.164 18.193 7.752 18.193 8.69C18.193 9.026 18.221 9.348 18.249 9.67C18.277 9.992 18.319 10.314 18.319 10.678C18.319 11.35 17.941 11.658 17.087 11.658H15.925V13.086H17.185C19.019 13.086 19.971 12.288 19.971 10.734C19.971 10.37 19.929 10.076 19.887 9.782C19.845 9.488 19.789 9.18 19.789 8.802C19.789 8.018 20.111 7.738 21.007 7.738H21.847V6.338H21.007Z"
+        fill="#828282"
+      />
+    </svg>
+  )
+}
+
 // const TabsBar = () => {
 //   return <div className={style.else}> hello</div>
 // }
@@ -217,8 +320,8 @@ const NuInspect: FC<OwnProps> = (props) => {
   return (
     <div className={style.container}>
       <Tabs id="TabsExample" onChange={console.log} selectedTabId="ng">
-        <Tab id="ng" title="Node" panel={<NodePanel />} />
-        <Tab id="mb" title="SomeContent" panel={<InspectorPanel />} />
+        <Tab id="mg" title="Node" panel={<NodePanel />} />
+        <Tab id="ng" title="SomeContent" panel={<InspectorPanel />} />
       </Tabs>
     </div>
   )

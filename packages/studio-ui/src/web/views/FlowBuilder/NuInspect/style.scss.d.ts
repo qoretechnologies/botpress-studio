@@ -3,13 +3,21 @@
 interface CssExports {
   'add': string;
   'block': string;
+  'blockLabel': string;
   'blockOptions': string;
   'blockWell': string;
   'container': string;
   'content': string;
   'delete': string;
+  'dynamicInputButton': string;
   'grabber': string;
-  'nodeInspector': string;
+  'inspectorWindow': string;
+  'label': string;
+  'messageContainer': string;
+  'messageHeader': string;
+  'messages': string;
+  'msg': string;
+  'msgComponent': string;
   'nodeName': string;
   'option': string;
   'optionButton': string;
@@ -17,7 +25,10 @@ interface CssExports {
   'optionMenu': string;
   'options': string;
   'optionsHeader': string;
+  'placeholderText': string;
+  'req': string;
   'tabsBar': string;
+  'text': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;
