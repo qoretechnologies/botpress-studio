@@ -1,11 +1,12 @@
 import { Button } from '@blueprintjs/core'
 import { ComponentMeta } from '@storybook/react'
 import React from 'react'
-import { data } from '../../demo/data'
+import { data } from '../../../demo/data'
+import { InspectorWindow } from '../../storybook'
 import { SiTypes, SuperInput } from '.'
 
 export default {
-  title: 'SuperInput',
+  title: 'Components/SuperInput',
   component: SuperInput
 } as ComponentMeta<typeof SuperInput>
 
@@ -31,27 +32,49 @@ const msgs = {
   noGlobsEvalMsg: 'no eventState'
 }
 
-export const Primary = () => <SuperInput type={SiTypes.EXPRESSION} value={code0} eventState={eventState} {...msgs} />
+export const Primary = () => (
+  <InspectorWindow>
+    <SuperInput type={SiTypes.EXPRESSION} value={code0} eventState={eventState} {...msgs} />
+  </InspectorWindow>
+)
 Primary.story = {
   name: 'Expression'
 }
 
-export const ExpressionNoEventState = () => <SuperInput type={SiTypes.EXPRESSION} value={code0} {...msgs} />
+export const ExpressionNoEventState = () => (
+  <InspectorWindow>
+    <SuperInput type={SiTypes.EXPRESSION} value={code0} {...msgs} />
+  </InspectorWindow>
+)
 ExpressionNoEventState.story = {
   name: 'Expression (no eventState)'
 }
 
-export const Valid = () => <SuperInput value={code2} eventState={eventState} {...msgs} />
+export const Valid = () => (
+  <InspectorWindow>
+    <SuperInput value={code2} eventState={eventState} {...msgs} />
+  </InspectorWindow>
+)
 
-export const Invalid = () => <SuperInput value={code1} eventState={eventState} {...msgs} autoFocus />
+export const Invalid = () => (
+  <InspectorWindow>
+    <SuperInput value={code1} eventState={eventState} {...msgs} autoFocus />
+  </InspectorWindow>
+)
 
-export const SomethingElse = () => <SuperInput value={code3} />
+export const SomethingElse = () => (
+  <InspectorWindow>
+    <SuperInput value={code3} />
+  </InspectorWindow>
+)
 SomethingElse.story = {
   name: 'Something Else (no eventState)'
 }
 
 export const AcceptsInputProps = () => (
-  <SuperInput leftIcon="user" placeholder="Email Address" rightElement={<Button>Sign Up</Button>} />
+  <InspectorWindow>
+    <SuperInput leftIcon="user" placeholder="Email Address" rightElement={<Button>Sign Up</Button>} />
+  </InspectorWindow>
 )
 AcceptsInputProps.story = {
   name: 'Accepts Input Props'

@@ -1,0 +1,39 @@
+.container {
+  height: 94vh;
+  width: 100%;
+  background: linear-gradient(90deg, #f5f6f8 10px, transparent 1%) center,
+    linear-gradient(#f5f6f8 10px, transparent 1%) center, #e2e2e2;
+  background-position: top left;
+  background-size: 12px 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.iContainer {
+  width: 350px;
+  margin: 20px;
+}
+.inspector {
+  margin-bottom: 20px;
+  min-height: 45px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.8rem;
+  border-radius: 8px;
+  gap: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.center {
+  background-color: black;
+}
+
+.textAreaThing {
+  height: 500px;
+  width: 370px;
+}

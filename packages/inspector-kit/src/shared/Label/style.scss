@@ -1,0 +1,27 @@
+@import '~@blueprintjs/core/lib/scss/variables';
+
+.label {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 0.6rem;
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    flex: 1;
+
+    .req {
+      color: red;
+    }
+
+    .hint {
+      border-bottom: 1px dashed $dark-gray5;
+
+      &:hover {
+        cursor: help;
+      }
+    }
+  }
+}
