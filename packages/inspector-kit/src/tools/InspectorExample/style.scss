@@ -1,0 +1,17 @@
+.container {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  width: 350px;
+  margin: 20px;
+  min-height: 150px;
+  margin-bottom: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  // gap: 1rem;
+  // padding: 1.8rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #adb5bd;
+}
