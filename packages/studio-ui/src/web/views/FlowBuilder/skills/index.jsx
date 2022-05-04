@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Dialog, lang } from 'botpress/shared'
 import find from 'lodash/find'
 import includes from 'lodash/includes'
 import React from 'react'
@@ -12,8 +13,6 @@ import withLanguage from '../../../components/Util/withLanguage'
 const style = require('./style.scss')
 
 const VALID_WINDOW_SIZES = ['normal', 'large', 'small']
-
-import { lang, Dialog } from 'botpress/shared'
 
 class WrappedInjectedModule extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -55,7 +54,7 @@ class SkillsBuilder extends React.Component {
     return <div>{lang.tr('studio.flow.skills.couldNotLoad')}</div>
   }
 
-  onDataChanged = data => {
+  onDataChanged = (data) => {
     this.data = data
   }
 
@@ -65,7 +64,7 @@ class SkillsBuilder extends React.Component {
       canSubmit: false
     })
 
-    return this.generateFlow().then(generated => {
+    return this.generateFlow().then((generated) => {
       if (this.props.action === 'edit') {
         this.props.updateSkill({
           skillId: this.props.skillId,
@@ -91,7 +90,7 @@ class SkillsBuilder extends React.Component {
     this.props.cancelNewSkill()
   }
 
-  onValidChanged = valid => {
+  onValidChanged = (valid) => {
     this.setState({ canSubmit: valid })
   }
 
@@ -108,7 +107,7 @@ class SkillsBuilder extends React.Component {
     )
   }
 
-  onWindowResized = size => {
+  onWindowResized = (size) => {
     if (!includes(VALID_WINDOW_SIZES, size)) {
       const sizes = VALID_WINDOW_SIZES.join(', ')
       return console.log(
@@ -124,7 +123,7 @@ class SkillsBuilder extends React.Component {
     })
   }
 
-  buildModuleProps = data => ({
+  buildModuleProps = (data) => ({
     initialData: data,
     onDataChanged: this.onDataChanged,
     onValidChanged: this.onValidChanged,
@@ -151,7 +150,14 @@ class SkillsBuilder extends React.Component {
       return
     }
 
-    return find(this.props.installedSkills, x => x.id.toLowerCase() === skillId.toLowerCase())
+    if (skillId === 'QorusCallAPI') {
+      return {
+        id: 'QorusCallApi',
+        moduleName: 'qorus-call-api'
+      }
+    }
+
+    return find(this.props.installedSkills, ({ id }) => id.toLowerCase() === skillId.toLowerCase())
   }
 
   render() {
@@ -160,6 +166,8 @@ class SkillsBuilder extends React.Component {
     const submitName = this.props.action === 'new' ? lang.tr('insert') : lang.tr('save')
     const title =
       this.props.action === 'new' ? lang.tr('studio.flow.skills.insert') : lang.tr('studio.flow.skills.edit')
+
+    console.log(skill)
 
     return (
       <Dialog.Wrapper
@@ -172,12 +180,18 @@ class SkillsBuilder extends React.Component {
         <Dialog.Body>
           {this.renderLoading()}
           {!this.state.loading && (
-            <WrappedInjectedModule
-              moduleName={skill && skill.moduleName}
-              componentName={skill && skill.id}
-              onNotFound={this.renderModuleNotFound}
-              extraProps={this.state.moduleProps}
-            />
+            <React.Fragment>
+              {skill && skill.id === 'QorusCallAPI' ? (
+                <h1>Qorus</h1>
+              ) : (
+                <WrappedInjectedModule
+                  moduleName={skill && skill.moduleName}
+                  componentName={skill && skill.id}
+                  onNotFound={this.renderModuleNotFound}
+                  extraProps={this.state.moduleProps}
+                />
+              )}
+            </React.Fragment>
           )}
         </Dialog.Body>
         <Dialog.Footer>
@@ -191,7 +205,7 @@ class SkillsBuilder extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   installedSkills: state.skills.installed,
   ...state.skills.builder
 })

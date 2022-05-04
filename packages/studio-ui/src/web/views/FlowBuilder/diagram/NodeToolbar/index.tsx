@@ -1,16 +1,16 @@
-import { Icon, Tooltip } from '@blueprintjs/core'
+import { Icon, IconName, Tooltip } from '@blueprintjs/core'
 import { Icons, lang } from 'botpress/shared'
-import React, { FC, Fragment, useState } from 'react'
+import React, { FC, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { buildNewSkill } from '~/actions'
 import { AccessControl } from '~/components/Shared/Utils'
-
 import style from './style.scss'
 
 interface ToolItemProps {
   type: string
   id?: string
-  icon?: any
+  nodeId?: string
+  icon?: IconName | JSX.Element
   label: string
 }
 
@@ -37,7 +37,7 @@ const Toolbar: FC = (props: any) => {
   )
 }
 
-const ToolItem: FC<ToolItemProps> = ({ label, type, id, icon }) => {
+const ToolItem: FC<ToolItemProps> = ({ label, type, id, nodeId, icon: CustomIcon }) => {
   return (
     <div
       id={`btn-tool-${id}`}
@@ -45,12 +45,10 @@ const ToolItem: FC<ToolItemProps> = ({ label, type, id, icon }) => {
       key={id}
       draggable
       onDragStart={(event) => {
-        event.dataTransfer.setData('diagram-node', JSON.stringify({ type, id }))
+        event.dataTransfer.setData('diagram-node', JSON.stringify({ type, id: nodeId || id }))
       }}
     >
-      <Tooltip content={label}>
-        <Icon icon={icon} />
-      </Tooltip>
+      <Tooltip content={label}>{typeof CustomIcon === 'string' ? <Icon icon={CustomIcon} /> : CustomIcon}</Tooltip>
     </div>
   )
 }

@@ -36,7 +36,6 @@ import {
 } from '~/actions'
 import { getAllFlows, getCurrentFlow, getCurrentFlowNode, RootReducer } from '~/reducers'
 import { DIAGRAM_PADDING } from './constants'
-
 import { prepareEventForDiagram } from './debugger'
 import DiagramToolbar from './DiagramToolbar'
 import { defaultTransition, DiagramManager, nodeTypes, Point } from './manager'

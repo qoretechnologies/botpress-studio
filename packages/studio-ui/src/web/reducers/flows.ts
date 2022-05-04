@@ -7,8 +7,8 @@ import {
   clearErrorSaveFlows,
   clearFlowMutex,
   closeFlowNodeProps,
-  copyFlowNodes,
   copyFlowNodeElement,
+  copyFlowNodes,
   errorSaveFlows,
   handleFlowEditorRedo,
   handleFlowEditorUndo,
@@ -482,15 +482,16 @@ reducer = reduceReducers(
         }
       },
 
-      [requestCreateFlow]: (state, { payload: name }) => ({
-        ...state,
-        flowsByName: {
-          ...state.flowsByName,
-          [name]: doCreateNewFlow(name)
+      [requestCreateFlow]: (state, { payload: name }) =>
+        console.log('CREATING NEW FLOW') || {
+          ...state,
+          flowsByName: {
+            ...state.flowsByName,
+            [name]: doCreateNewFlow(name)
+          },
+          currentFlow: name,
+          currentFlowNode: null
         },
-        currentFlow: name,
-        currentFlowNode: null
-      }),
 
       [requestDeleteFlow]: (state, { payload: name }) => ({
         ...state,
