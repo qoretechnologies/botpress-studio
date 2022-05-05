@@ -4,13 +4,14 @@ import React, { FC, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { buildNewSkill } from '~/actions'
 import { AccessControl } from '~/components/Shared/Utils'
+import QoreIconImage from '~/img/qorus_logo_28.svg'
 import style from './style.scss'
 
 interface ToolItemProps {
   type: string
   id?: string
   nodeId?: string
-  icon?: IconName | JSX.Element
+  icon?: IconName | 'qore'
   label: string
 }
 
@@ -29,15 +30,20 @@ const Toolbar: FC = (props: any) => {
         </Fragment>
       )}
       <AccessControl resource="bot.skills" operation="write">
-        {props.skills?.map((skill) => (
-          <ToolItem key={skill.id} label={lang.tr(skill.name)} type="skill" id={skill.id} icon={skill.icon} />
-        ))}
+        {props.skills?.map((skill) => {
+          console.log(skill)
+         return (<ToolItem key={skill.id} label={lang.tr(skill.name)} type="skill" id={skill.id} icon={skill.icon} />
+        )})}
       </AccessControl>
     </div>
   )
 }
-
-const ToolItem: FC<ToolItemProps> = ({ label, type, id, nodeId, icon: CustomIcon }) => {
+const QoreIcon: FC = () => (
+  <React.Fragment>
+    <img src={QoreIconImage} style={{width: '65%', transform: 'translateX(-50%)', marginLeft: '50%' }}></img>
+  </React.Fragment>
+)
+const ToolItem: FC<ToolItemProps> = ({ label, type, id, nodeId, icon }) => {
   return (
     <div
       id={`btn-tool-${id}`}
@@ -48,7 +54,7 @@ const ToolItem: FC<ToolItemProps> = ({ label, type, id, nodeId, icon: CustomIcon
         event.dataTransfer.setData('diagram-node', JSON.stringify({ type, id: nodeId || id }))
       }}
     >
-      <Tooltip content={label}>{typeof CustomIcon === 'string' ? <Icon icon={CustomIcon} /> : CustomIcon}</Tooltip>
+      <Tooltip content={label}>{icon === 'qore' ? <QoreIcon/>: <Icon icon={icon} /> }</Tooltip>
     </div>
   )
 }
