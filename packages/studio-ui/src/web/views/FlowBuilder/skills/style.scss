@@ -9,6 +9,11 @@
   }
 }
 
+.modal-body {
+  overflow-y: auto !important;
+  background-color: #fff !important;
+}
+
 .size-normal {
   width: 50%;
 }

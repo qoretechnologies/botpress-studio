@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'loadingContainer': string;
+  'modal-body': string;
   'size-large': string;
   'size-normal': string;
   'size-small': string;
